@@ -1,0 +1,937 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta
+      name="description"
+      content="Refill & Go: pide, devuelve y reutiliza envases sin depósito."
+    />
+    <meta name="theme-color" content="#f9fafb" />
+    <title>Refill &amp; Go</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../css/style.css" />
+  </head>
+  <body>
+    <!-- Toda la estructura de la app vive aquí en HTML.
+         Cada <section class="screen"> es una pantalla; JS solo muestra una y oculta las demás. -->
+    <main id="app" aria-live="polite">
+
+    <!-- ===== BIENVENIDA ===== -->
+    <section class="screen" id="screen-welcome">
+    <div class="page welcome">
+      <div class="brand"><span class="brand-mark"><img class="icon" src="../assets/icons/169a8.svg" alt=""></span>Refill &amp; Go</div>
+      <div class="welcome-visual"><img src="../assets/images/978cb.png" alt="Envases circulares reutilizables"></div>
+      <div class="stack welcome-copy">
+        <h1 class="title">Tu comida para llevar.<br>Sin dejar huella.</h1>
+        <p class="subtitle">Escanea una vez. Pide o devuelve un envase y ayuda a tu planeta.</p>
+        <p class="benefit"><img class="icon" src="../assets/icons/5ac1a.svg" alt=""> Sin depósito. Reutiliza y gana eco-puntos.</p>
+        <div class="welcome-actions">
+          <button class="button" data-screen="signup"><img class="icon" src="../assets/icons/b763d.svg" alt=""> Empezar</button>
+          <button class="text-button" data-screen="login">Ya tengo una cuenta</button>
+          <p class="microcopy">Hecho para tu día a día en Lima.</p>
+        </div>
+      </div>
+    </div>
+    </section>
+
+
+    <!-- ===== INICIAR SESIÓN ===== -->
+    <section class="screen" id="screen-login" hidden>
+    <div class="page login-layout">
+      <header class="topbar">
+        <button class="icon-button" data-action="back" aria-label="Volver"><img class="icon" src="../assets/icons/637ef.svg" alt=""></button>
+        <h1>Ingresa a tu cuenta</h1>
+      </header>
+      <div class="login-intro"><h2 class="title">¡Qué bueno verte!</h2><p class="subtitle">Tu próximo refill está a un escaneo de distancia.</p></div>
+      <form class="form" id="login-form">
+        <label class="field">Correo electrónico<input name="email" type="email" autocomplete="email" required></label>
+        <label class="field">Contraseña
+          <span class="input-wrap"><input name="password" type="password" autocomplete="current-password" required>
+          <button class="icon-button password-toggle" type="button" data-action="toggle-password" aria-label="Mostrar contraseña"><img class="icon" src="../assets/icons/bd8aa.svg" alt=""></button></span>
+          <span class="help">Tu contraseña se mantiene segura.</span>
+        </label>
+        <button class="text-button" type="button" data-screen="forgot-password">¿Olvidaste tu contraseña?</button>
+        <p class="form-error" role="alert" hidden></p>
+        <button class="button" type="submit"><img class="icon" src="../assets/icons/b763d.svg" alt=""> Ingresar</button>
+        <div class="notice"><img class="icon" src="../assets/icons/16547.svg" alt="">
+          <div><strong>Sin depósito, desde tu primer préstamo</strong><span>Solo necesitas tu cuenta para empezar.</span></div>
+        </div>
+        <p class="microcopy">¿Es tu primera vez por aquí?</p>
+        <button class="text-button" type="button" data-screen="signup">Crear mi cuenta</button>
+      </form>
+    </div>
+    </section>
+
+
+    <!-- ===== CREAR CUENTA ===== -->
+    <section class="screen" id="screen-signup" hidden>
+    <div class="page login-layout">
+      <header class="topbar">
+        <button class="icon-button" data-action="back" aria-label="Volver"><img class="icon" src="../assets/icons/637ef.svg" alt=""></button>
+        <h1>Crea una cuenta</h1>
+      </header>
+      <div class="login-intro"><h2 class="title compact-title">¡Gracias por considerar<br>sumarte a esta comunidad!</h2><p class="subtitle">Tu próximo refill está a un escaneo de distancia.</p></div>
+      <form class="form" id="signup-form">
+        <label class="field">Crea tu nombre de Usuario<input name="name" autocomplete="name" required></label>
+        <label class="field">Correo electrónico<input name="email" type="email" autocomplete="email" required></label>
+        <label class="field">Contraseña
+          <span class="input-wrap"><input name="password" type="password" minlength="6" autocomplete="new-password" required>
+          <button class="icon-button password-toggle" type="button" data-action="toggle-password" aria-label="Mostrar contraseña"><img class="icon" src="../assets/icons/bd8aa.svg" alt=""></button></span>
+          <span class="help">Tu contraseña se mantiene segura.</span>
+        </label>
+        <p class="form-error" role="alert" hidden></p>
+        <button class="button" type="submit"><img class="icon" src="../assets/icons/b763d.svg" alt=""> Crear</button>
+        <div class="notice"><img class="icon" src="../assets/icons/16547.svg" alt="">
+          <div><strong>Sin depósito, desde tu primer préstamo</strong><span>Solo necesitas tu cuenta para empezar.</span></div>
+        </div>
+        <button class="text-button" type="button" data-screen="login">Ya tengo una cuenta</button>
+      </form>
+    </div>
+    </section>
+
+
+    <!-- ===== RECUPERAR CONTRASEÑA (PASO 1) ===== -->
+    <section class="screen" id="screen-forgot-password" hidden>
+    <div class="page login-layout">
+      <header class="topbar">
+        <button class="icon-button" data-action="back" aria-label="Volver"><img class="icon" src="../assets/icons/637ef.svg" alt=""></button>
+        <h1>Recuperar contraseña</h1>
+      </header>
+      <div class="login-intro"><h2 class="title compact-title">Confirma que eres tú!</h2><p class="subtitle">Necesitamos estos datos para recuperar tu cuenta...</p></div>
+      <form class="form" id="recovery-form">
+        <label class="field">Recuerdas tu Nombre de Usuario?<input name="name" required></label>
+        <label class="field">Correo electrónico Afiliado<input name="email" type="email" required></label>
+        <span class="help">Tu contraseña se mantiene segura.</span>
+        <p class="form-error" role="alert" hidden></p>
+        <button class="button" type="submit"><img class="icon" src="../assets/icons/b763d.svg" alt=""> Siguiente</button>
+        <div class="notice"><img class="icon" src="../assets/icons/16547.svg" alt="">
+          <div><strong>Sin depósito, desde tu primer préstamo</strong><span>Solo necesitas tu cuenta para empezar.</span></div>
+        </div>
+        <button class="text-button" type="button" data-screen="signup">Crear mi cuenta</button>
+      </form>
+    </div>
+    </section>
+
+
+    <!-- ===== RECUPERAR CONTRASEÑA (PASO 2) ===== -->
+    <section class="screen" id="screen-new-password" hidden>
+    <div class="page login-layout">
+      <header class="topbar">
+        <button class="icon-button" data-action="back" aria-label="Volver"><img class="icon" src="../assets/icons/637ef.svg" alt=""></button>
+        <h1>Recuperar contraseña</h1>
+      </header>
+      <div class="login-intro"><h2 class="title compact-title">Confirma que eres tú!</h2><p class="subtitle">Necesitamos estos datos para recuperar tu cuenta...</p></div>
+      <form class="form" id="new-password-form">
+        <label class="field">Nueva Contraseña<input name="password" type="password" minlength="6" required></label>
+        <label class="field">Confirmar Contraseña<input name="confirmation" type="password" minlength="6" required></label>
+        <span class="help">Tu contraseña se mantiene segura.</span>
+        <p class="form-error" role="alert" hidden></p>
+        <button class="button" type="submit"><img class="icon" src="../assets/icons/b763d.svg" alt=""> Actualizar Contraseña</button>
+        <div class="notice"><img class="icon" src="../assets/icons/16547.svg" alt="">
+          <div><strong>Sin depósito, desde tu primer préstamo</strong><span>Solo necesitas tu cuenta para empezar.</span></div>
+        </div>
+        <button class="text-button" type="button" data-action="back">Atrás</button>
+      </form>
+    </div>
+    </section>
+
+
+    <!-- ===== INICIO ===== -->
+    <section class="screen" id="screen-home" hidden>
+    <div class="page with-nav">
+      <header class="dashboard-head">
+        <div><h1 class="title">Hola, <span data-bind="user-first">Tú</span></h1><p class="help">Hoy eliges reutilizar.</p></div>
+        <span class="chip"><img class="icon" src="../assets/icons/1f3f0.svg" alt=""> <span data-bind="points">260</span></span>
+      </header>
+      <div class="dashboard-grid">
+        <section class="stack">
+          <div class="section-head"><h2 class="section-title">Tus envases (<span data-bind="active-count">2</span>)</h2><button data-screen="history">Historial</button></div>
+          <div class="notice warning-notice" id="home-reminder" hidden><img class="icon" src="../assets/icons/16547.svg" alt=""><div><strong id="home-reminder-title"></strong><span>Devuélvelos en cualquier punto aliado para sumar eco-puntos.</span></div></div>
+          <!-- JS inserta aquí las tarjetas de envases activos -->
+          <div class="stack" id="home-containers"></div>
+          <div class="empty-state" id="home-empty" hidden><strong>No tienes envases prestados</strong><p>Escanea un punto aliado para pedir uno.</p><button class="button" data-screen="scan">Pedir un envase</button></div>
+        </section>
+        <section class="stack">
+          <h2 class="section-title">Tu impacto hasta hoy</h2>
+          <div class="impact-grid">
+            <article class="impact"><img class="icon" src="../assets/icons/e542a.svg" alt=""><strong><span data-bind="avoided">12</span></strong><span>envases de un solo uso evitados</span></article>
+            <article class="impact"><img class="icon" src="../assets/icons/e5844.svg" alt=""><strong><span data-bind="plastic">1.8</span><small> kg</small></strong><span>de plástico evitado</span></article>
+          </div>
+          <p class="help">Estimación referencial de tu impacto acumulado.</p>
+          <div class="notice"><img class="icon" src="../assets/icons/16547.svg" alt="">
+            <div><strong>Tu próximo refill, sin depósito</strong></div>
+          </div>
+        </section>
+      </div>
+    </div>
+    <nav class="bottom-nav" aria-label="Navegación principal">
+      <button class="nav-item active" data-screen="home" aria-label="Inicio">
+        <img src="../assets/icons/33ffb.svg" alt="">
+        <span>Inicio</span>
+      </button>
+      <button class="nav-item" data-screen="map" aria-label="Mapa">
+        <img src="../assets/icons/86b34.svg" alt="">
+        <span>Mapa</span>
+      </button>
+      <button class="nav-item nav-scan" data-screen="scan" aria-label="Escanear">
+        <img src="../assets/icons/1c569.svg" alt="">
+        <span>Escanear</span>
+      </button>
+      <button class="nav-item" data-screen="rewards" aria-label="Recompensas">
+        <img src="../assets/icons/c6c03.svg" alt="">
+        <span>Recompensas</span>
+      </button>
+      <button class="nav-item" data-screen="profile" aria-label="Perfil">
+        <img src="../assets/icons/39df2.svg" alt="">
+        <span>Perfil</span>
+      </button>
+    </nav>
+    </section>
+
+
+    <!-- ===== MAPA ===== -->
+    <section class="screen" id="screen-map" hidden>
+    <div class="page with-nav map-page">
+      <header class="topbar">
+        <h1>Puntos cerca de ti</h1>
+        <button class="icon-button" data-action="filters" aria-label="Filtros"><img class="icon" src="../assets/icons/999f1.svg" alt=""></button>
+      </header>
+      <div class="map-canvas">
+        <div class="map-stage">
+          <!-- Mapa dibujado en SVG (no depende de imágenes) -->
+          <svg class="map-art" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+            <defs>
+              <g id="roads-minor">
+                <path vector-effect="non-scaling-stroke" d="M12 8H100M12 16H100M12 24H100M12 32H100M12 40H100M12 48H100M12 56H100M12 64H100M12 70H100M12 84H100M12 92H100"/>
+                <path vector-effect="non-scaling-stroke" d="M20 0V100M28 0V100M46 0V100M64 0V100M72 0V100M80 0V100M88 0V100M95 0V100"/>
+              </g>
+              <g id="roads-major">
+                <path vector-effect="non-scaling-stroke" d="M38 0V100"/>
+                <path vector-effect="non-scaling-stroke" d="M56 0V100"/>
+                <path vector-effect="non-scaling-stroke" d="M12 76H100"/>
+                <path vector-effect="non-scaling-stroke" d="M14 44L56 66"/>
+              </g>
+            </defs>
+            <path vector-effect="non-scaling-stroke" class="map-sea" d="M0 0H7C9 14 5 28 8 42S6 70 9 100H0Z"/>
+            <path vector-effect="non-scaling-stroke" class="map-cliff" d="M7 0C9 14 5 28 8 42S6 70 9 100H12C10 70 13 56 12 42S13 14 11 0Z"/>
+            <path vector-effect="non-scaling-stroke" class="map-water-lines" d="M2 10C3 14 2 18 3 22M3 50C4 54 3 58 4 62M2 80C3 84 2 88 3 92"/>
+            <rect vector-effect="non-scaling-stroke" class="map-park" x="12" y="52" width="22" height="7" rx="1.5"/>
+            <rect vector-effect="non-scaling-stroke" class="map-park" x="68" y="19" width="10" height="9" rx="1.5"/>
+            <rect vector-effect="non-scaling-stroke" class="map-park" x="58" y="82" width="7" height="7" rx="1.5"/>
+            <use href="#roads-minor" class="map-road-casing"/>
+            <use href="#roads-minor" class="map-road"/>
+            <use href="#roads-major" class="map-major-casing"/>
+            <use href="#roads-major" class="map-major"/>
+          </svg>
+          <span class="map-label big label-miraflores">MIRAFLORES</span>
+          <span class="map-label label-kennedy">Parque Kennedy</span>
+          <span class="map-label road-v label-larco">Av. José Larco</span>
+          <span class="map-label road-v label-lapaz">Av. La Paz</span>
+          <span class="map-label label-benavides">Av. Benavides</span>
+          <button class="marker large" data-kind="coffee" data-name="café brote" data-action="point" data-point="brote" aria-label="Café Brote"><img class="icon" src="../assets/icons/28191.svg" alt=""></button>
+          <button class="marker" data-kind="coffee" data-name="cocina raíz" data-action="point" data-point="raiz" aria-label="Cocina Raíz"><img class="icon" src="../assets/icons/18c08.svg" alt=""></button>
+          <button class="marker orange" data-kind="return" data-name="estación circular" data-action="point" data-point="circular" aria-label="Estación Circular"><img class="icon" src="../assets/icons/28f19.svg" alt=""></button>
+          <button class="marker" data-kind="coffee" data-name="panadería trigo" data-action="point" data-point="trigo" aria-label="Panadería Trigo"><img class="icon" src="../assets/icons/18c08.svg" alt=""></button>
+          <button class="marker orange" data-kind="return" data-name="estación kennedy" data-action="point" data-point="kennedy" aria-label="Estación Kennedy"><img class="icon" src="../assets/icons/28f19.svg" alt=""></button>
+          <button class="marker" data-kind="coffee" data-name="mercado orgánico" data-action="point" data-point="organico" aria-label="Mercado Orgánico"><img class="icon" src="../assets/icons/18c08.svg" alt=""></button>
+          <span class="you-are-here" aria-label="Tu ubicación"></span>
+        </div>
+        <div class="map-top">
+          <label class="search-box"><img class="icon" src="../assets/icons/03c20.svg" alt=""><input id="map-search" aria-label="Buscar punto" placeholder="Buscar café o punto de devolución"></label>
+          <div class="filters"><button class="filter active" data-filter="all">Todos</button><button class="filter" data-filter="coffee">Cafés</button><button class="filter" data-filter="return">Devolución</button></div>
+        </div>
+        <p class="map-empty" id="map-empty" hidden>No encontramos puntos con esa búsqueda.</p>
+        <button class="map-locate" data-action="locate" aria-label="Volver a mi ubicación"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="3.5"/><circle cx="12" cy="12" r="7.5"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg></button>
+        <!-- Cuadro del punto: icono, nombre, dirección y "Cómo llegar" -->
+        <div class="map-panel" id="map-panel" hidden>
+          <div class="container-summary"><div class="symbol"><img class="icon" src="../assets/icons/cba29.svg" alt=""></div><div><h2 class="section-title" id="map-name"></h2><p class="container-meta" id="map-address"></p></div></div>
+          <a class="button" id="map-link" href="https://www.google.com/maps" target="_blank" rel="noreferrer"><img class="icon" src="../assets/icons/74eba.svg" alt=""> Cómo llegar</a>
+        </div>
+      </div>
+    </div>
+    <nav class="bottom-nav" aria-label="Navegación principal">
+      <button class="nav-item" data-screen="home" aria-label="Inicio">
+        <img src="../assets/icons/ffc2d.svg" alt="">
+        <span>Inicio</span>
+      </button>
+      <button class="nav-item active" data-screen="map" aria-label="Mapa">
+        <img src="../assets/icons/ddb14.svg" alt="">
+        <span>Mapa</span>
+      </button>
+      <button class="nav-item nav-scan" data-screen="scan" aria-label="Escanear">
+        <img src="../assets/icons/1c569.svg" alt="">
+        <span>Escanear</span>
+      </button>
+      <button class="nav-item" data-screen="rewards" aria-label="Recompensas">
+        <img src="../assets/icons/c6c03.svg" alt="">
+        <span>Recompensas</span>
+      </button>
+      <button class="nav-item" data-screen="profile" aria-label="Perfil">
+        <img src="../assets/icons/39df2.svg" alt="">
+        <span>Perfil</span>
+      </button>
+    </nav>
+    </section>
+
+
+    <!-- ===== ESCANEAR QR · PEDIR PRESTADO ===== -->
+    <section class="screen" id="screen-scan" hidden>
+    <div class="scanner">
+      <img class="scanner-bg" src="../assets/images/57215.png" alt="Interior de un café">
+      <div class="scanner-veil"></div>
+      <header class="topbar">
+        <button class="icon-button" data-action="back" aria-label="Volver"><img class="icon" src="../assets/icons/637ef.svg" alt=""></button>
+        <h1>Escanear QR</h1>
+        <span class="icon-button"><img class="icon" src="../assets/icons/28511.svg" alt=""></span>
+      </header>
+      <div class="scan-tabs">
+        <button class="scan-tab active" data-screen="scan">Pedir prestado</button>
+        <button class="scan-tab" data-screen="scan-return">Devolver</button>
+      </div>
+      <div class="scan-target">
+        <img class="scan-guide" src="../assets/icons/de25e.svg" alt="">
+        <button class="qr" data-action="scan-code" data-mode="loan" aria-label="Escanear código QR"><span class="qr-pattern"></span><span>Refill &amp; Go</span></button>
+        <span class="scan-line"></span>
+      </div>
+      <div class="scanner-help"><h2>Apunta al QR del punto aliado</h2><p>Un escaneo - Puntos inmediatos</p><button class="button secondary" data-action="manual">Ingresar código manualmente</button></div>
+    </div>
+    <nav class="bottom-nav" aria-label="Navegación principal">
+      <button class="nav-item" data-screen="home" aria-label="Inicio">
+        <img src="../assets/icons/ffc2d.svg" alt="">
+        <span>Inicio</span>
+      </button>
+      <button class="nav-item" data-screen="map" aria-label="Mapa">
+        <img src="../assets/icons/86b34.svg" alt="">
+        <span>Mapa</span>
+      </button>
+      <button class="nav-item nav-scan active" data-screen="scan" aria-label="Escanear">
+        <img src="../assets/icons/1c569.svg" alt="">
+        <span>Escanear</span>
+      </button>
+      <button class="nav-item" data-screen="rewards" aria-label="Recompensas">
+        <img src="../assets/icons/c6c03.svg" alt="">
+        <span>Recompensas</span>
+      </button>
+      <button class="nav-item" data-screen="profile" aria-label="Perfil">
+        <img src="../assets/icons/39df2.svg" alt="">
+        <span>Perfil</span>
+      </button>
+    </nav>
+    </section>
+
+
+    <!-- ===== ESCANEAR QR · DEVOLVER ===== -->
+    <section class="screen" id="screen-scan-return" hidden>
+    <div class="scanner">
+      <img class="scanner-bg" src="../assets/images/57215.png" alt="Interior de un café">
+      <div class="scanner-veil"></div>
+      <header class="topbar">
+        <button class="icon-button" data-action="back" aria-label="Volver"><img class="icon" src="../assets/icons/637ef.svg" alt=""></button>
+        <h1>Escanear QR</h1>
+        <span class="icon-button"><img class="icon" src="../assets/icons/28511.svg" alt=""></span>
+      </header>
+      <div class="scan-tabs">
+        <button class="scan-tab" data-screen="scan">Pedir prestado</button>
+        <button class="scan-tab active" data-screen="scan-return">Devolver</button>
+      </div>
+      <div class="scan-target">
+        <img class="scan-guide" src="../assets/icons/de25e.svg" alt="">
+        <button class="qr" data-action="scan-code" data-mode="return" aria-label="Escanear código QR"><span class="qr-pattern"></span><span>Refill &amp; Go</span></button>
+        <span class="scan-line"></span>
+      </div>
+      <div class="scanner-help"><h2>Apunta al QR del punto aliado</h2><p>Un escaneo - Puntos inmediatos</p><button class="button secondary" data-action="manual">Ingresar código manualmente</button></div>
+    </div>
+    <nav class="bottom-nav" aria-label="Navegación principal">
+      <button class="nav-item" data-screen="home" aria-label="Inicio">
+        <img src="../assets/icons/ffc2d.svg" alt="">
+        <span>Inicio</span>
+      </button>
+      <button class="nav-item" data-screen="map" aria-label="Mapa">
+        <img src="../assets/icons/86b34.svg" alt="">
+        <span>Mapa</span>
+      </button>
+      <button class="nav-item nav-scan active" data-screen="scan" aria-label="Escanear">
+        <img src="../assets/icons/1c569.svg" alt="">
+        <span>Escanear</span>
+      </button>
+      <button class="nav-item" data-screen="rewards" aria-label="Recompensas">
+        <img src="../assets/icons/c6c03.svg" alt="">
+        <span>Recompensas</span>
+      </button>
+      <button class="nav-item" data-screen="profile" aria-label="Perfil">
+        <img src="../assets/icons/39df2.svg" alt="">
+        <span>Perfil</span>
+      </button>
+    </nav>
+    </section>
+
+
+    <!-- ===== CÓDIGO MANUAL · PEDIR PRESTADO ===== -->
+    <section class="screen" id="screen-manual-loan" hidden>
+    <div class="scanner manual-scanner">
+      <img class="scanner-bg" src="../assets/images/57215.png" alt="Interior de un café">
+      <div class="scanner-veil"></div>
+      <header class="topbar">
+        <button class="icon-button" data-action="back" aria-label="Volver"><img class="icon" src="../assets/icons/637ef.svg" alt=""></button>
+        <h1>Escanear QR</h1>
+        <span class="icon-button"><img class="icon" src="../assets/icons/28511.svg" alt=""></span>
+      </header>
+      <button class="scan-back button secondary" data-screen="scan">Volver a QR</button>
+      <form class="manual-card" id="manual-code-form" data-mode="loan">
+        <div class="handle dark"></div>
+        <p class="manual-intro">Ingresar código manualmente para solicitar un préstamo:</p>
+        <label class="field">Código de Envase
+          <input name="code" placeholder="Ej. RG-2048" pattern="RG-[0-9]{4}" title="Usa el formato RG-2048" required>
+        </label>
+        <label class="field">Tipo Envase
+          <select name="container" required><option value="">Selecciona un envase</option></select>
+        </label>
+        <p class="help">Gracias por apoyar esta iniciativa :)!</p>
+        <img class="manual-illustration" src="../assets/images/5bcae.png" alt="Envases reutilizables">
+        <button class="button secondary" type="submit"><img class="icon" src="../assets/icons/b763d.svg" alt=""> Confirmar Código</button>
+      </form>
+    </div>
+    <nav class="bottom-nav" aria-label="Navegación principal">
+      <button class="nav-item" data-screen="home" aria-label="Inicio">
+        <img src="../assets/icons/ffc2d.svg" alt="">
+        <span>Inicio</span>
+      </button>
+      <button class="nav-item" data-screen="map" aria-label="Mapa">
+        <img src="../assets/icons/86b34.svg" alt="">
+        <span>Mapa</span>
+      </button>
+      <button class="nav-item nav-scan active" data-screen="scan" aria-label="Escanear">
+        <img src="../assets/icons/1c569.svg" alt="">
+        <span>Escanear</span>
+      </button>
+      <button class="nav-item" data-screen="rewards" aria-label="Recompensas">
+        <img src="../assets/icons/c6c03.svg" alt="">
+        <span>Recompensas</span>
+      </button>
+      <button class="nav-item" data-screen="profile" aria-label="Perfil">
+        <img src="../assets/icons/39df2.svg" alt="">
+        <span>Perfil</span>
+      </button>
+    </nav>
+    </section>
+
+
+    <!-- ===== CÓDIGO MANUAL · DEVOLVER ===== -->
+    <section class="screen" id="screen-manual-return" hidden>
+    <div class="scanner manual-scanner">
+      <img class="scanner-bg" src="../assets/images/57215.png" alt="Interior de un café">
+      <div class="scanner-veil"></div>
+      <header class="topbar">
+        <button class="icon-button" data-action="back" aria-label="Volver"><img class="icon" src="../assets/icons/637ef.svg" alt=""></button>
+        <h1>Escanear QR</h1>
+        <span class="icon-button"><img class="icon" src="../assets/icons/28511.svg" alt=""></span>
+      </header>
+      <button class="scan-back button secondary" data-screen="scan-return">Volver a QR</button>
+      <form class="manual-card" id="manual-code-form" data-mode="return">
+        <div class="handle dark"></div>
+        <p class="manual-intro">Ingresar código manualmente para realizar la devolución:</p>
+        <label class="field">Código de Envase
+          <input name="code" placeholder="Ej. RG-2048" pattern="RG-[0-9]{4}" title="Usa el formato RG-2048" required>
+        </label>
+        <label class="field">Tipo Envase
+          <select name="container" required><option value="">Selecciona un envase</option></select>
+        </label>
+        <p class="help">Gracias por apoyar esta iniciativa :)!</p>
+        <img class="manual-illustration" src="../assets/images/abaad.png" alt="Envases reutilizables">
+        <button class="button secondary" type="submit"><img class="icon" src="../assets/icons/b763d.svg" alt=""> Confirmar Código</button>
+      </form>
+    </div>
+    <nav class="bottom-nav" aria-label="Navegación principal">
+      <button class="nav-item" data-screen="home" aria-label="Inicio">
+        <img src="../assets/icons/ffc2d.svg" alt="">
+        <span>Inicio</span>
+      </button>
+      <button class="nav-item" data-screen="map" aria-label="Mapa">
+        <img src="../assets/icons/86b34.svg" alt="">
+        <span>Mapa</span>
+      </button>
+      <button class="nav-item nav-scan active" data-screen="scan" aria-label="Escanear">
+        <img src="../assets/icons/1c569.svg" alt="">
+        <span>Escanear</span>
+      </button>
+      <button class="nav-item" data-screen="rewards" aria-label="Recompensas">
+        <img src="../assets/icons/c6c03.svg" alt="">
+        <span>Recompensas</span>
+      </button>
+      <button class="nav-item" data-screen="profile" aria-label="Perfil">
+        <img src="../assets/icons/39df2.svg" alt="">
+        <span>Perfil</span>
+      </button>
+    </nav>
+    </section>
+
+
+    <!-- ===== PRÉSTAMO CONFIRMADO ===== -->
+    <section class="screen" id="screen-loan-confirmed" hidden>
+    <div class="page detail-page stack">
+      <header class="topbar">
+        <button class="icon-button" data-action="back" aria-label="Volver"><img class="icon" src="../assets/icons/637ef.svg" alt=""></button>
+        <h1>Préstamo confirmado</h1>
+      </header>
+      <div class="hero-image"><img id="loan-image" src="../assets/images/a2a71.png" alt="Bowl y táper circular reutilizable"><span class="hero-check"><img class="icon" src="../assets/icons/8c416.svg" alt=""></span></div>
+      <div><h2 class="title">¡Listo para llevar!</h2><p class="subtitle">Disfruta tu comida. Tu envase ya está registrado en tu cuenta.</p></div>
+      <div class="card details">
+        <div class="container-status"><strong id="loan-name">Bowl circular · 750 ml</strong><span class="status">Activo</span></div>
+        <div class="detail-row"><span>Código del envase</span><span id="loan-code">RG-2048</span></div>
+        <div class="detail-row"><span>Punto de préstamo</span><span id="loan-place">Café Brote</span></div>
+        <div class="detail-row"><span>Devuelve hasta</span><span id="loan-due">Devuélvelo dentro de 7 días</span></div>
+      </div>
+      <div class="notice"><img class="icon" src="../assets/icons/16547.svg" alt="">
+        <div><strong>Sin depósito · S/ 0</strong><span>Devuélvelo en 7 días, en cualquier punto aliado. Cada devolución suma eco-puntos.</span></div>
+      </div>
+      <button class="button" data-screen="home">Ver mis envases</button>
+      <button class="text-button" data-screen="home">Volver al inicio</button>
+    </div>
+    </section>
+
+
+    <!-- ===== ELEGIR ENVASE A DEVOLVER ===== -->
+    <section class="screen" id="screen-return-select" hidden>
+    <div class="page detail-page stack">
+      <header class="topbar">
+        <button class="icon-button" data-action="back" aria-label="Volver"><img class="icon" src="../assets/icons/637ef.svg" alt=""></button>
+        <h1>Elige qué envase devolver</h1>
+      </header>
+      <div><h2 class="title">Tus envases activos</h2><p class="subtitle">Selecciona el código que entregarás en el punto aliado.</p></div>
+      <!-- JS inserta aquí las tarjetas con el botón "Elegir" -->
+      <div class="stack" id="return-containers"></div>
+      <div class="empty-state" id="return-empty" hidden><strong>No hay envases para devolver</strong><p>Pide un envase antes de iniciar una devolución.</p><button class="button" data-screen="scan">Pedir un envase</button></div>
+    </div>
+    <nav class="bottom-nav" aria-label="Navegación principal">
+      <button class="nav-item" data-screen="home" aria-label="Inicio">
+        <img src="../assets/icons/ffc2d.svg" alt="">
+        <span>Inicio</span>
+      </button>
+      <button class="nav-item" data-screen="map" aria-label="Mapa">
+        <img src="../assets/icons/86b34.svg" alt="">
+        <span>Mapa</span>
+      </button>
+      <button class="nav-item nav-scan active" data-screen="scan" aria-label="Escanear">
+        <img src="../assets/icons/1c569.svg" alt="">
+        <span>Escanear</span>
+      </button>
+      <button class="nav-item" data-screen="rewards" aria-label="Recompensas">
+        <img src="../assets/icons/c6c03.svg" alt="">
+        <span>Recompensas</span>
+      </button>
+      <button class="nav-item" data-screen="profile" aria-label="Perfil">
+        <img src="../assets/icons/39df2.svg" alt="">
+        <span>Perfil</span>
+      </button>
+    </nav>
+    </section>
+
+
+    <!-- ===== CONFIRMAR DEVOLUCIÓN ===== -->
+    <section class="screen" id="screen-return-confirm" hidden>
+    <div class="page detail-page stack">
+      <header class="topbar">
+        <button class="icon-button" data-action="back" aria-label="Volver"><img class="icon" src="../assets/icons/637ef.svg" alt=""></button>
+        <h1>Devolver envase</h1>
+      </header>
+      <div><p class="benefit">QR LEÍDO · ÚLTIMO PASO</p><h2 class="title">Cerremos el ciclo</h2><p class="subtitle">Confirma el envase que vas a entregar. Puedes devolverlo en otro punto.</p></div>
+      <div class="card container-card selected-card">
+        <div class="container-summary"><div class="symbol"><img class="icon" src="../assets/icons/eb5cd.svg" alt=""></div><div class="grow"><p class="container-name" id="rc-name">Bowl circular · 750 ml</p><p class="container-meta" id="rc-meta">RG-2048 · Sin depósito</p></div><img class="icon" src="../assets/icons/4f042.svg" alt=""></div>
+        <div class="container-status"><span class="status" id="rc-status">Activo</span><span class="due" id="rc-due">Devuélvelo hasta el 10 oct.</span></div>
+      </div>
+      <button class="text-button" data-action="change-container">Cambiar envase</button>
+      <div class="card container-card"><div class="container-summary"><div class="symbol"><img class="icon" src="../assets/icons/c010c.svg" alt=""></div><div class="grow"><p class="container-name" id="rc-place-name">Estación Circular</p><p class="container-meta"><span id="rc-place-address">Calle Alcanfores 455 · Miraflores</span><br>Punto ilustrativo</p></div><img class="icon" src="../assets/icons/afb5f.svg" alt=""></div></div>
+      <div class="notice"><img class="icon" src="../assets/icons/16547.svg" alt="">
+        <div><strong>Entrégalo vacío y con su tapa</strong><span>El punto aliado se encarga del lavado y la desinfección.</span></div>
+      </div>
+      <div class="center"><span class="chip"><img class="icon" src="../assets/icons/1f3f0.svg" alt=""> +20 eco-puntos</span></div>
+      <button class="button" data-action="confirm-return"><img class="icon" src="../assets/icons/65c29.svg" alt=""> Confirmar devolución</button>
+    </div>
+    </section>
+
+
+    <!-- ===== DEVOLUCIÓN COMPLETA ===== -->
+    <section class="screen" id="screen-return-success" hidden>
+    <div class="page detail-page stack">
+      <header class="topbar">
+        <button class="icon-button" data-action="back" aria-label="Volver"><img class="icon" src="../assets/icons/637ef.svg" alt=""></button>
+        <h1>Devolución completa</h1>
+      </header>
+      <div class="stack success">
+        <div class="success-seal"><img class="halo" src="../assets/icons/6fd04.svg" alt=""><span class="seal"><img class="icon" src="../assets/icons/11258.svg" alt=""></span></div>
+        <h2 class="title">¡Gracias por<br>devolver!</h2>
+        <p class="subtitle">Tu envase vuelve al ciclo.<br>Tu impacto sigue creciendo.</p>
+      </div>
+      <div class="points-card"><span><img class="icon" src="../assets/icons/1f3f0.svg" alt=""> +20 eco-puntos</span><strong><span data-bind="points">260</span> eco-puntos en total</strong><p>¡Ya puedes canjear un café!</p></div>
+      <div class="card details"><div class="container-status"><strong id="returned-title">Envase</strong><span class="status neutral">Devuelto</span></div><div class="detail-row"><span>Fecha</span><span id="returned-date"></span></div></div>
+      <button class="button" data-screen="rewards"><img class="icon" src="../assets/icons/99b48.svg" alt=""> Ver recompensas</button>
+      <button class="text-button" data-screen="home">Volver al inicio</button>
+    </div>
+    </section>
+
+
+    <!-- ===== RECOMPENSAS ===== -->
+    <section class="screen" id="screen-rewards" hidden>
+    <div class="page with-nav stack">
+      <header class="topbar">
+        <h1>Recompensas</h1>
+        <button class="icon-button" data-screen="rewards-info" aria-label="Ayuda"><img class="icon" src="../assets/icons/24a27.svg" alt=""></button>
+      </header>
+      <div class="points-card balance"><img class="balance-icon" src="../assets/icons/7cbfe.svg" alt=""><span>TU SALDO DISPONIBLE</span><strong><span data-bind="points">260</span> eco-puntos</strong><p>Elige algo rico. Te lo ganaste.</p></div>
+      <h2 class="section-title">Pequeños premios, gran impacto</h2>
+      <!-- JS inserta aquí las tarjetas del catálogo de premios -->
+      <div class="rewards-grid" id="rewards-grid"></div>
+      <div class="notice"><img class="icon" src="../assets/icons/16547.svg" alt="">
+        <div><strong>Cada devolución suma 20 eco-puntos</strong><span>Tus eco-puntos no vencen.</span></div>
+      </div>
+      <p class="microcopy">Premios y aliados ilustrativos, sin afiliación real.</p>
+    </div>
+    <nav class="bottom-nav" aria-label="Navegación principal">
+      <button class="nav-item" data-screen="home" aria-label="Inicio">
+        <img src="../assets/icons/ffc2d.svg" alt="">
+        <span>Inicio</span>
+      </button>
+      <button class="nav-item" data-screen="map" aria-label="Mapa">
+        <img src="../assets/icons/86b34.svg" alt="">
+        <span>Mapa</span>
+      </button>
+      <button class="nav-item nav-scan" data-screen="scan" aria-label="Escanear">
+        <img src="../assets/icons/1c569.svg" alt="">
+        <span>Escanear</span>
+      </button>
+      <button class="nav-item active" data-screen="rewards" aria-label="Recompensas">
+        <img src="../assets/icons/b39c9.svg" alt="">
+        <span>Recompensas</span>
+      </button>
+      <button class="nav-item" data-screen="profile" aria-label="Perfil">
+        <img src="../assets/icons/39df2.svg" alt="">
+        <span>Perfil</span>
+      </button>
+    </nav>
+    </section>
+
+
+    <!-- ===== CANJEO DE RECOMPENSA ===== -->
+    <section class="screen" id="screen-reward-success" hidden>
+    <div class="page detail-page stack">
+      <header class="topbar">
+        <button class="icon-button" data-action="back" aria-label="Volver"><img class="icon" src="../assets/icons/637ef.svg" alt=""></button>
+        <h1>Canjeo de Recompensa</h1>
+      </header>
+      <div class="stack success">
+        <div class="success-seal"><img class="halo" src="../assets/icons/6fd04.svg" alt=""><span class="seal"><img class="icon" src="../assets/icons/11258.svg" alt=""></span></div>
+        <h2 class="title">¡Disfruta tu premio!</h2>
+        <p class="subtitle">Recompensa canjeada con éxito. Muéstrala en el punto aliado.</p>
+      </div>
+      <div class="reward-receipt"><article class="card reward-card"><img id="rs-image" src="../assets/images/93d67.png" alt="Café americano"><div><p class="reward-title" id="rs-title">Café americano</p><p class="reward-place" id="rs-place">Café Brote</p><p class="reward-cost"><span id="rs-cost">200</span> eco-puntos</p></div></article></div>
+      <div class="points-card reward-points"><span>-<span id="rs-spent">200</span> eco-puntos</span><strong><span data-bind="points">260</span> eco-puntos disponibles</strong></div>
+      <div class="card details"><div class="detail-row"><span>Canje <span id="rs-claim">RG-1005</span></span><span id="rs-date"></span></div></div>
+      <button class="button" data-screen="rewards"><img class="icon" src="../assets/icons/99b48.svg" alt=""> Ver más recompensas</button>
+      <button class="text-button" data-screen="home">Volver al inicio</button>
+    </div>
+    </section>
+
+
+    <!-- ===== CÓMO FUNCIONAN LOS ECO-PUNTOS ===== -->
+    <section class="screen" id="screen-rewards-info" hidden>
+    <div class="page with-nav detail-page stack">
+      <header class="topbar">
+        <button class="icon-button" data-action="back" aria-label="Volver"><img class="icon" src="../assets/icons/637ef.svg" alt=""></button>
+        <h1>Cómo funcionan los eco-puntos</h1>
+      </header>
+      <div class="notice"><img class="icon" src="../assets/icons/16547.svg" alt="">
+        <div><strong>Cada devolución suma 20 eco-puntos</strong><span>Los puntos aparecen en tu saldo inmediatamente.</span></div>
+      </div>
+      <div class="card info-card stack"><h2 class="section-title">Canjea cuando quieras</h2><p class="subtitle">Si tienes saldo suficiente, el premio se marca como canjeado y su costo se descuenta. Tus otros puntos permanecen disponibles.</p><button class="button" data-screen="rewards">Ver catálogo</button></div>
+    </div>
+    <nav class="bottom-nav" aria-label="Navegación principal">
+      <button class="nav-item" data-screen="home" aria-label="Inicio">
+        <img src="../assets/icons/ffc2d.svg" alt="">
+        <span>Inicio</span>
+      </button>
+      <button class="nav-item" data-screen="map" aria-label="Mapa">
+        <img src="../assets/icons/86b34.svg" alt="">
+        <span>Mapa</span>
+      </button>
+      <button class="nav-item nav-scan" data-screen="scan" aria-label="Escanear">
+        <img src="../assets/icons/1c569.svg" alt="">
+        <span>Escanear</span>
+      </button>
+      <button class="nav-item active" data-screen="rewards" aria-label="Recompensas">
+        <img src="../assets/icons/b39c9.svg" alt="">
+        <span>Recompensas</span>
+      </button>
+      <button class="nav-item" data-screen="profile" aria-label="Perfil">
+        <img src="../assets/icons/39df2.svg" alt="">
+        <span>Perfil</span>
+      </button>
+    </nav>
+    </section>
+
+
+    <!-- ===== PERFIL ===== -->
+    <section class="screen" id="screen-profile" hidden>
+    <div class="page with-nav profile-page stack">
+      <header class="topbar">
+        <h1>Mi perfil</h1>
+        <button class="icon-button" data-screen="profile-data" aria-label="Configuración"><img class="icon" src="../assets/icons/06f23.svg" alt=""></button>
+      </header>
+      <div class="card profile-identity"><div class="avatar"><span data-bind="user-initials">TN</span></div><div><h2>“<span data-bind="user-name">Tú nombre</span>”</h2><p><span data-bind="user-email">tucorreo@gmail.com</span></p><small>Reutilizando desde <span data-bind="since">nov. de 2026</span></small></div></div>
+      <div class="profile-summary"><span class="chip"><img class="icon" src="../assets/icons/1f3f0.svg" alt=""> <span data-bind="points">260</span> eco-puntos</span><span><span data-bind="avoided">12</span> envases evitados</span></div>
+      <div class="card profile-menu">
+        <button class="profile-option" data-screen="profile-data"><img class="icon" src="../assets/icons/c6a52.svg" alt=""><span>Mis datos</span><img class="icon" src="../assets/icons/dbae8.svg" alt=""></button>
+        <button class="profile-option" data-action="toggle-reminders"><img class="icon" src="../assets/icons/07e05.svg" alt=""><span>Recordatorios</span><span class="switch on" id="reminders-switch" role="switch" aria-checked="true"><i></i></span></button>
+        <button class="profile-option" data-screen="history"><img class="icon" src="../assets/icons/ca3c5.svg" alt=""><span>Historial de envases</span><img class="icon" src="../assets/icons/dbae8.svg" alt=""></button>
+        <button class="profile-option" data-screen="support"><img class="icon" src="../assets/icons/5a48e.svg" alt=""><span>Ayuda y soporte</span><img class="icon" src="../assets/icons/dbae8.svg" alt=""></button>
+        <button class="profile-option" data-screen="privacy"><img class="icon" src="../assets/icons/16547.svg" alt=""><span>Privacidad</span><img class="icon" src="../assets/icons/dbae8.svg" alt=""></button>
+      </div>
+      <button class="text-button logout" data-action="logout"><img class="icon" src="../assets/icons/306c4.svg" alt=""> Cerrar sesión</button>
+      <p class="microcopy">Refill &amp; Go · Versión 1.0<br>Menos residuos. Más posibilidades.</p>
+    </div>
+    <nav class="bottom-nav" aria-label="Navegación principal">
+      <button class="nav-item" data-screen="home" aria-label="Inicio">
+        <img src="../assets/icons/ffc2d.svg" alt="">
+        <span>Inicio</span>
+      </button>
+      <button class="nav-item" data-screen="map" aria-label="Mapa">
+        <img src="../assets/icons/86b34.svg" alt="">
+        <span>Mapa</span>
+      </button>
+      <button class="nav-item nav-scan" data-screen="scan" aria-label="Escanear">
+        <img src="../assets/icons/1c569.svg" alt="">
+        <span>Escanear</span>
+      </button>
+      <button class="nav-item" data-screen="rewards" aria-label="Recompensas">
+        <img src="../assets/icons/c6c03.svg" alt="">
+        <span>Recompensas</span>
+      </button>
+      <button class="nav-item active" data-screen="profile" aria-label="Perfil">
+        <img src="../assets/icons/c6a52.svg" alt="">
+        <span>Perfil</span>
+      </button>
+    </nav>
+    </section>
+
+
+    <!-- ===== MIS DATOS ===== -->
+    <section class="screen" id="screen-profile-data" hidden>
+    <div class="page with-nav detail-page stack">
+      <header class="topbar">
+        <button class="icon-button" data-action="back" aria-label="Volver"><img class="icon" src="../assets/icons/637ef.svg" alt=""></button>
+        <h1>Mis Datos</h1>
+        <span class="icon-button"><img class="icon" src="../assets/icons/06f23.svg" alt=""></span>
+      </header>
+      <form class="card profile-editor stack" id="profile-form">
+        <div class="profile-identity plain"><div class="avatar"><span data-bind="user-initials">TN</span></div><div><h2>“<span data-bind="user-name">Tú nombre</span>”</h2><p><span data-bind="user-email">tucorreo@gmail.com</span></p></div></div>
+        <h2 class="section-title">Total actual de Eco-Puntos:</h2>
+        <span class="chip centered"><img class="icon" src="../assets/icons/7cbfe.svg" alt=""> <span data-bind="points">260</span> eco-puntos</span>
+        <h2 class="section-title">Cambiar Información Personal:</h2>
+        <label class="field">Nombre de Usuario<input name="name" value="Tú nombre" required></label>
+        <label class="field">Correo electrónico<input name="email" type="email" value="tucorreo@gmail.com" required></label>
+        <label class="field">Teléfono<input name="phone" type="tel" value="" placeholder="+51 999 123 456"></label>
+        <div class="plant-divider"><img class="icon" src="../assets/icons/3a45e.svg" alt=""><img class="icon" src="../assets/icons/24505.svg" alt=""><img class="icon" src="../assets/icons/3a45e.svg" alt=""></div>
+        <p class="form-error" role="alert" hidden></p>
+        <button class="button" type="submit">Guardar Cambios</button>
+        <button class="button secondary" type="button" data-screen="profile">Descartar/Volver</button>
+      </form>
+    </div>
+    <nav class="bottom-nav" aria-label="Navegación principal">
+      <button class="nav-item" data-screen="home" aria-label="Inicio">
+        <img src="../assets/icons/ffc2d.svg" alt="">
+        <span>Inicio</span>
+      </button>
+      <button class="nav-item" data-screen="map" aria-label="Mapa">
+        <img src="../assets/icons/86b34.svg" alt="">
+        <span>Mapa</span>
+      </button>
+      <button class="nav-item nav-scan" data-screen="scan" aria-label="Escanear">
+        <img src="../assets/icons/1c569.svg" alt="">
+        <span>Escanear</span>
+      </button>
+      <button class="nav-item" data-screen="rewards" aria-label="Recompensas">
+        <img src="../assets/icons/c6c03.svg" alt="">
+        <span>Recompensas</span>
+      </button>
+      <button class="nav-item active" data-screen="profile" aria-label="Perfil">
+        <img src="../assets/icons/c6a52.svg" alt="">
+        <span>Perfil</span>
+      </button>
+    </nav>
+    </section>
+
+
+    <!-- ===== HISTORIAL DE ENVASES ===== -->
+    <section class="screen" id="screen-history" hidden>
+    <div class="page with-nav detail-page stack">
+      <header class="topbar">
+        <button class="icon-button" data-action="back" aria-label="Volver"><img class="icon" src="../assets/icons/637ef.svg" alt=""></button>
+        <h1>Historial de envases</h1>
+      </header>
+      <div class="history-stats"><div><strong><span data-bind="avoided">12</span></strong><span>envases reutilizados</span></div><div><strong><span data-bind="plastic">1.8</span> kg</strong><span>plástico evitado</span></div></div>
+      <h2 class="section-title">Movimientos recientes</h2>
+      <div class="history-filters" role="group" aria-label="Filtrar movimientos">
+        <button class="history-filter active" data-history-filter="all">Todos</button>
+        <button class="history-filter" data-history-filter="loan">Prestados</button>
+        <button class="history-filter" data-history-filter="return">Devueltos</button>
+        <button class="history-filter" data-history-filter="points">Puntos</button>
+      </div>
+      <!-- JS inserta aquí los movimientos -->
+      <div class="stack" id="history-list"></div>
+      <div class="empty-state" id="history-empty" hidden><strong>Aún no hay movimientos</strong><p>Cuando pidas o devuelvas un envase, lo verás aquí.</p><button class="button" data-screen="scan">Pedir un envase</button></div>
+    </div>
+    <nav class="bottom-nav" aria-label="Navegación principal">
+      <button class="nav-item" data-screen="home" aria-label="Inicio">
+        <img src="../assets/icons/ffc2d.svg" alt="">
+        <span>Inicio</span>
+      </button>
+      <button class="nav-item" data-screen="map" aria-label="Mapa">
+        <img src="../assets/icons/86b34.svg" alt="">
+        <span>Mapa</span>
+      </button>
+      <button class="nav-item nav-scan" data-screen="scan" aria-label="Escanear">
+        <img src="../assets/icons/1c569.svg" alt="">
+        <span>Escanear</span>
+      </button>
+      <button class="nav-item" data-screen="rewards" aria-label="Recompensas">
+        <img src="../assets/icons/c6c03.svg" alt="">
+        <span>Recompensas</span>
+      </button>
+      <button class="nav-item active" data-screen="profile" aria-label="Perfil">
+        <img src="../assets/icons/c6a52.svg" alt="">
+        <span>Perfil</span>
+      </button>
+    </nav>
+    </section>
+
+
+    <!-- ===== AYUDA Y SOPORTE ===== -->
+    <section class="screen" id="screen-support" hidden>
+    <div class="page with-nav detail-page stack">
+      <header class="topbar">
+        <button class="icon-button" data-action="back" aria-label="Volver"><img class="icon" src="../assets/icons/637ef.svg" alt=""></button>
+        <h1>Ayuda y soporte</h1>
+      </header>
+      <div class="card info-card stack">
+        <div class="info-hero"><img class="icon" src="../assets/icons/5a48e.svg" alt=""></div>
+        <h2 class="title">¿Cómo podemos ayudarte?</h2>
+        <p class="subtitle">Consulta respuestas rápidas o envíanos un mensaje. Esta demo simula la atención dentro de la app.</p>
+        <form class="stack" id="support-form">
+          <label class="field">Tu mensaje<textarea name="message" rows="4" placeholder="Cuéntanos cómo podemos ayudarte" required></textarea></label>
+          <button class="button" type="submit">Enviar mensaje</button>
+        </form>
+        <button class="button secondary" data-action="faq" id="faq-button">Ver preguntas frecuentes</button>
+        <div class="faq-list" id="faq-list" hidden>
+          <details open><summary>¿Dónde devuelvo un envase?</summary><p>En cualquier estación de devolución mostrada en el mapa.</p></details>
+          <details><summary>¿Cuántos puntos gano?</summary><p>Cada devolución confirmada suma 20 eco-puntos.</p></details>
+        </div>
+        <div class="sent-messages" id="sent-messages" hidden>
+          <h3>Mensajes enviados</h3>
+          <div class="sent-list" id="sent-list"></div>
+        </div>
+      </div>
+    </div>
+    <nav class="bottom-nav" aria-label="Navegación principal">
+      <button class="nav-item" data-screen="home" aria-label="Inicio">
+        <img src="../assets/icons/ffc2d.svg" alt="">
+        <span>Inicio</span>
+      </button>
+      <button class="nav-item" data-screen="map" aria-label="Mapa">
+        <img src="../assets/icons/86b34.svg" alt="">
+        <span>Mapa</span>
+      </button>
+      <button class="nav-item nav-scan" data-screen="scan" aria-label="Escanear">
+        <img src="../assets/icons/1c569.svg" alt="">
+        <span>Escanear</span>
+      </button>
+      <button class="nav-item" data-screen="rewards" aria-label="Recompensas">
+        <img src="../assets/icons/c6c03.svg" alt="">
+        <span>Recompensas</span>
+      </button>
+      <button class="nav-item active" data-screen="profile" aria-label="Perfil">
+        <img src="../assets/icons/c6a52.svg" alt="">
+        <span>Perfil</span>
+      </button>
+    </nav>
+    </section>
+
+
+    <!-- ===== PRIVACIDAD ===== -->
+    <section class="screen" id="screen-privacy" hidden>
+    <div class="page with-nav detail-page stack">
+      <header class="topbar">
+        <button class="icon-button" data-action="back" aria-label="Volver"><img class="icon" src="../assets/icons/637ef.svg" alt=""></button>
+        <h1>Privacidad</h1>
+      </header>
+      <div class="card info-card stack">
+        <div class="info-hero"><img class="icon" src="../assets/icons/16547.svg" alt=""></div>
+        <h2 class="title">Tus datos, bajo tu control</h2>
+        <p class="subtitle">Usamos solo la información necesaria para gestionar tus envases, eco-puntos y preferencias.</p>
+        <label class="consent"><input type="checkbox" id="privacy-consent" checked data-action="privacy-consent"> Permitir comunicaciones sobre devoluciones</label>
+        <button class="button" data-action="save-privacy">Guardar preferencias</button>
+        <button class="button secondary" data-action="delete-account">Eliminar mi cuenta y mis datos</button>
+      </div>
+    </div>
+    <nav class="bottom-nav" aria-label="Navegación principal">
+      <button class="nav-item" data-screen="home" aria-label="Inicio">
+        <img src="../assets/icons/ffc2d.svg" alt="">
+        <span>Inicio</span>
+      </button>
+      <button class="nav-item" data-screen="map" aria-label="Mapa">
+        <img src="../assets/icons/86b34.svg" alt="">
+        <span>Mapa</span>
+      </button>
+      <button class="nav-item nav-scan" data-screen="scan" aria-label="Escanear">
+        <img src="../assets/icons/1c569.svg" alt="">
+        <span>Escanear</span>
+      </button>
+      <button class="nav-item" data-screen="rewards" aria-label="Recompensas">
+        <img src="../assets/icons/c6c03.svg" alt="">
+        <span>Recompensas</span>
+      </button>
+      <button class="nav-item active" data-screen="profile" aria-label="Perfil">
+        <img src="../assets/icons/c6a52.svg" alt="">
+        <span>Perfil</span>
+      </button>
+    </nav>
+    </section>
+
+
+
+    <!-- ===== PLANTILLAS: moldes HTML que JS clona para repetir elementos ===== -->
+
+    <template id="tpl-container-card">
+      <article class="card container-card">
+        <div class="container-summary">
+          <div class="symbol"><img class="icon" src="../assets/icons/eb5cd.svg" alt=""></div>
+          <div class="grow"><p class="container-name" data-field="name"></p><p class="container-meta" data-field="meta"></p></div>
+          <button class="small-select" data-action="select-return" data-field="select" hidden>Elegir</button>
+        </div>
+        <div class="container-status"><span class="status" data-field="status"></span><span class="due" data-field="due"></span></div>
+      </article>
+    </template>
+
+    <template id="tpl-history-item">
+      <article class="card history-item">
+        <div class="symbol"><span data-field="icon-container"><img class="icon" src="../assets/icons/eb5cd.svg" alt=""></span><span data-field="icon-points" hidden><img class="icon" src="../assets/icons/1f3f0.svg" alt=""></span></div>
+        <div><strong data-field="title"></strong><p data-field="detail"></p><small data-field="meta"></small></div>
+        <span class="status" data-field="status"></span>
+      </article>
+    </template>
+
+    <template id="tpl-reward-card">
+      <article class="card reward-card">
+        <img data-field="image" src="" alt="">
+        <div><p class="reward-title" data-field="title"></p><p class="reward-place" data-field="place"></p><p class="reward-cost"><span data-field="cost"></span> eco-puntos</p></div>
+        <button class="button" data-action="redeem" data-field="button"></button>
+      </article>
+    </template>
+
+    </main>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <script type="module" src="../javascript/main.js"></script>
+  </body>
+</html>

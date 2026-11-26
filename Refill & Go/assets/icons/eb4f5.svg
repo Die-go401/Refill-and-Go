@@ -1,0 +1,7 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="308" height="32" viewBox="0 0 308 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Entrada">
+<rect x="0.5" y="0.5" width="307" height="31" rx="11.5" fill="white"/>
+<rect x="0.5" y="0.5" width="307" height="31" rx="11.5" stroke="#E5E7EB"/>
+<path id="Vector" d="M284.5 18.668C285.569 21.3987 288.225 23.3333 291.333 23.3333C295.383 23.3333 298.667 20.05 298.667 16M298.167 13.332C297.099 10.6007 294.442 8.66667 291.333 8.66667C287.283 8.66667 284 11.95 284 16M289.333 18.6667H284V24M298.667 8V13.3333H293.333" stroke-width="2" stroke="#14532D"/>
+</g>
+</svg>
